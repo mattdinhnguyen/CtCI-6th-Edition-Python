@@ -10,6 +10,10 @@ def multiply(a, b, answer):
         answer += a
         return multiply(a, b - 1, answer)
 
+def mmultiply(a,b):
+	if b == 0: return 0
+	if b>0: return a + mmultiply(a,b-1)
+	else: return -mmultiply(a,-b)
 
 # Solution 1
 def minProduct(a, b):
@@ -81,6 +85,7 @@ def minProduct3Helper(smaller, bigger):
 
 if __name__ == "__main__":
     print(multiply(5, 6, 0))
+    print(mmultiply(5, 6))
     print(minProduct(5, 6))
     print(minProduct2(5, 6))
     print(minProduct3(5, 6))

@@ -34,6 +34,18 @@ def rotate_matrix_pythonic(matrix):
         for k in range(n):
             result[k][i] = matrix[j][k]
     return result
+def rotate_matrix_python(matrix):
+    for i in range(len(matrix)//2):
+        j = len(matrix)-i-1
+        # matrix[i][:], matrix[j][:] = matrix[j], matrix[i][:]
+        for k in range(len(matrix[0])):
+            matrix[i][k], matrix[j][k] = matrix[j][k], matrix[i][k]
+    # for r in matrix: print(r)
+    for i in range(len(matrix)):
+        for j in range(i,len(matrix[0])):
+            if i != j:
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    return matrix
 
 
 class Test(unittest.TestCase):
@@ -57,7 +69,7 @@ class Test(unittest.TestCase):
             ],
         ),
     ]
-    testable_functions = [rotate_matrix_pythonic, rotate_matrix]
+    testable_functions = [rotate_matrix_python, rotate_matrix_pythonic, rotate_matrix]
 
     def test_rotate_matrix(self):
         for f in self.testable_functions:

@@ -2,6 +2,19 @@
 import time
 import unittest
 
+def are_1_edit_different(word1, word2):
+    h, w = len(word1)+1, len(word2)+1
+    pre = [i for i in range(w)]
+    cur = [0]*w
+    for i in range(1, h):
+        cur[0] = i
+        for j in range(1, w):
+            if word1[i-1] == word2[j-1]:
+                cur[j] = pre[j-1]
+            else:
+                cur[j] = min(pre[j-1]+1, pre[j]+1, cur[j-1]+1)
+        cur, pre = pre, cur
+    return pre[-1] <= 1
 
 def are_one_edit_different(s1, s2):
     """Check if a string can converted to another string with a single edit"""
@@ -52,7 +65,7 @@ def are_one_edit_different_sets(a, b):
         #            which in this case would just be
         #            one character replaced.
         if len(set(a) & set(b)) == len(a) - 1:
-            return True
+            return True # failed this test case ("igh", "hif", False)
 
     # Case 2 : The two strings are of different lengths
     elif abs(len(a) - len(b)) == 1:
@@ -73,6 +86,7 @@ def are_one_edit_different_sets(a, b):
 
 class Test(unittest.TestCase):
     test_cases = [
+        # ("igh", "hif", False),
         # no changes
         ("pale", "pale", True),
         ("", "", True),
@@ -100,7 +114,7 @@ class Test(unittest.TestCase):
         ("palks", "pal", False),
     ]
 
-    testable_functions = [are_one_edit_different, are_one_edit_different_sets]
+    testable_functions = [are_one_edit_different, are_1_edit_different, are_one_edit_different_sets]
 
     def test_one_away(self):
 

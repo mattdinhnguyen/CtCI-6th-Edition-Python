@@ -21,7 +21,17 @@ def urlify_algo(string, length):
     # convert back to string
     return string.join(char_list)
 
-
+def urlify_algo(string, length):
+    j = len(string) -1
+    lst = list(string)
+    for i in range(length-1,-1,-1):
+        if lst[i] == ' ':
+            lst[j-2:j+1] = "%20"
+            j -= 3
+        else:
+            lst[j] = lst[i]
+            j -= 1
+    return ''.join(lst)
 def urlify_pythonic(text, length):
     """solution using standard library"""
     return text.rstrip().replace(" ", "%20")
