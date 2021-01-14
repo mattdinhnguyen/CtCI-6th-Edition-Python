@@ -20,11 +20,21 @@ def bits_insertion(n, m, i, j):
     bit_str = ""  # format the answer number as a string of 0s and 1s
     # repeat dividing the answer by two until it reaches zero, or less than one
     # if the remainder is odd, prefix the bit string with '1', else '0'
-    while answer:
-        bit_str = "1" + bit_str if answer & 1 == 1 else "0" + bit_str
-        answer /= 2
+    while answer: # convert to binary string
+        bit_str = "1" + bit_str if answer & 1 == 1 else "0" + bit_str # insert low-ordered bits 0 till answer is 0
+        answer //= 2 # or shilft low-ordered bits left
     return bit_str.zfill(num_bits)  # pad string to num_bits
 
+def bits_insertion(n, m, i, j):
+    # num_bits = len(m)
+    # ones = sum([2 ** _ for _ in range(num_bits)])
+    ones = 2**len(m) -1
+    ones_left = ones << (j+1)
+    ones_right = (1 << i) -1
+    mask = ones_left | ones_right
+    _n, _m = int(n,2) & mask, int(m,2) << i
+    ans = _n | _m
+    return f"{ans:b}"
 
 if __name__ == "__main__":
     print(bits_insertion("10000000000", "10011", 2, 6))

@@ -36,13 +36,38 @@ def merge_intervals(v):
             result.append(v[i])
     return result
 def power(x, n):
-    if n < 3: return x**n
+    if 0 <= n < 3: return [1, x, x*x][n]
     r, m = n//2, n%2
     e = x
     while r:
        e **= 2
        r //= 2
     return e*x if m else e
+# https://www.interviewbit.com/problems/power-of-two-integers/ n = A**P, A>0, P>1
+def isPower(n: int):
+    for p in range(2,33):
+        a = round(n**(1/p))
+        if a**p == n :
+            return 1
+    return 0
+# A[i] becomes A[A[i]], 0 <= A[i] < len(A), with O(1) extra space
+def arrange(A):
+    n = len(A)  
+    for i in range(n):
+        A[i] += (A[A[i]]%n)*n
+    for i in range(n):
+        A[i] = A[i]//n
+
+def arrange(A):
+    for i,n in enumerate(A):
+        j = i
+        while 0 <= A[j] and A[j] != i and A[A[j]] >= 0:
+            m = A[j]
+            A[j], j = -A[m], m
+        if A[j] == i:
+            A[j] = -n
+    for i,n in enumerate(A):
+        A[i] = -n
 
 def find_low_index(arr, key):
   r = len(arr)
@@ -60,7 +85,13 @@ def find_high_index(arr, key):
     if key >= arr[m]: l = m+1
     else: r = m
   return r-1 if r > 0 and key == arr[r-1] else -1
-
+def binaryConversion(n,m):
+    xor = n^m
+    cnt = 0
+    while xor:
+        if xor & 1 == 1: cnt += 1
+        xor >>= 1
+    return cnt
 class Test(unittest.TestCase):
     test_cases = [
         ([1,10,20,0,59,63,0,88,0], [0,0,0,1,10,20,59,63,88]),
@@ -90,5 +121,18 @@ class Test(unittest.TestCase):
         r = power(3,9)
         print(r,3**9)
         assert r == 3**9
+    def test_binaryConcersion(self):
+        r = binaryConversion(29,15)
+        print(r,29,15)
+        assert r == 2
+    def test_isPower(self):
+        print(isPower(16808))
+    def test_arrange(self):
+        A = [1,2,3,0]
+        A = [2, 1, 3, 0]
+        arrange(A)
+        assert A == [3, 1, 0, 2]
+        print(A)
+
 if __name__ == "__main__":
     unittest.main()

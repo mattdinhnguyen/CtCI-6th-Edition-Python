@@ -17,11 +17,25 @@ def bin_to_string(number):
             bit_str += "0"
             number = two
     return bit_str.ljust(33, "0")
-
+# .1011 = 1/2 + 0/4 + 1/8 + 1/16
+def bin_to_string(number):
+    bit_str = "."
+    decimalPlace = 1
+    while number > 0:
+        # if len(bit_str) > 32:
+        #     return bit_str
+        deciVal = 1/(2**decimalPlace)
+        if number >= deciVal:
+            bit_str += "1"
+            number -= deciVal
+        else:
+            bit_str += "0"
+        decimalPlace += 1
+    return bit_str.ljust(33, "0")
 
 if __name__ == "__main__":
 
-    for number in [0.625, 0, 0.1, 0.101, 0.2, 0.5, 1, 2]:
+    for number in [0.987654321, 0.625, 0, 0.1, 0.101, 0.2, 0.5, 1, 2]:
         bit_str = bin_to_string(number)
         response = bit_str if len(bit_str) <= 33 else "ERROR"
         print("Number: {}, Binary String: {}".format(number, response))
