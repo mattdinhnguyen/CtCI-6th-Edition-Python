@@ -19,7 +19,6 @@ class SortedStack(Stack):
             while not self.temp_stack.is_empty():
                 super().push(self.temp_stack.pop())
 
-
 class Tests(unittest.TestCase):
     def test_push_one(self):
         queue = SortedStack()

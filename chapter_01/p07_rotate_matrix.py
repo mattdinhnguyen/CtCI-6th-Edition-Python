@@ -4,7 +4,9 @@ from copy import deepcopy
 
 
 def rotate_matrix(matrix):
-    """rotates a matrix 90 degrees clockwise"""
+    """rotates a matrix 90 degrees clockwise
+    https://leetcode.com/problems/rotate-image/discuss/18872/A-common-method-to-rotate-the-image
+    """
     n = len(matrix)
     for layer in range(n // 2):
         first, last = layer, n - layer - 1
@@ -25,7 +27,18 @@ def rotate_matrix(matrix):
             matrix[i][-layer - 1] = top
     return matrix
 
-
+def rotate_matrix_pythonic(matrix):
+    n, m = len(matrix), len(matrix[0])
+    for i in range(len(matrix)//2):
+        j = n-i-1
+        # matrix[i][:], matrix[j][:] = matrix[j], matrix[i][:]
+        for k in range(m):
+            matrix[i][k], matrix[j][k] = matrix[j][k], matrix[i][k]
+    # for r in matrix: print(r)
+    for i in range(n):
+        for j in range(i,m):
+            if i != j:
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
 def rotate_matrix_pythonic(matrix):
     """rotates a matrix 90 degrees clockwise"""
     n = len(matrix)
@@ -47,6 +60,16 @@ def rotate_matrix_python(matrix):
                 matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
     return matrix
 
+def anti_rotate_matrix_pythonic(matrix):
+    n, m = len(matrix), len(matrix[0])
+    for r in range(n):
+        for c in range(m//2): # reverse column values in each row
+            hi = m-c-1
+            r[c], r[hi] = r[hi], r[c]
+    for i in range(n):
+        for j in range(i,m):
+            if i != j:
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
 
 class Test(unittest.TestCase):
 
