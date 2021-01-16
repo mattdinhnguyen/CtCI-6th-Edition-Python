@@ -35,14 +35,36 @@ def merge_intervals(v):
         else:
             result.append(v[i])
     return result
-def power(x, n):
-    if 0 <= n < 3: return [1, x, x*x][n]
-    r, m = n//2, n%2
-    e = x
-    while r:
-       e **= 2
-       r //= 2
-    return e*x if m else e
+class Solution:
+    def myPow(self, base: float, expo: int) -> float:
+        inverse = 0; ans = sign = 1
+        if base < 0:
+            y = -base; sign = -1 if expo%2 else 1
+        else: y = base
+        if expo < 0:
+            expo = -expo; inverse = 1
+        while expo > 0:
+            if expo&1:
+                ans *= y
+            y *= y
+            expo >>= 1
+        return ans*sign if not inverse else 1/ans*sign
+    def power(self, base, expo, m):
+        if m == 1: return 0
+        ans = 1; y = base%m; inverse = 0
+        if expo < 0:
+            expo = -expo
+            inverse = 1
+        while expo > 0:
+            if expo&1:
+                ans = (ans*y)%m
+            y = (y*y)%m
+            if y < 0: y+=m
+            expo >>= 1
+        if ans < 0:
+            ans = m - abs(ans)%m
+            return ans if not inverse else 1/ans
+        return ans%m if not inverse else 1/ans
 # https://www.interviewbit.com/problems/power-of-two-integers/ n = A**P, A>0, P>1
 def isPower(n: int):
     for p in range(2,33):
@@ -118,9 +140,15 @@ class Test(unittest.TestCase):
         for i in range(len(result)):
             print("[" + str(result[i].first) + ", " + str(result[i].second) + "]", end =" ")
     def test_power(self):
-        r = power(3,9)
+        sol = Solution()
+        assert round(sol.power(-2.0,2,100000000),5) == 4
+        assert round(sol.power(2.1,3,1000000000),5) == 9.26100
+        assert round(sol.power(2.0,-2,1000000000),5) == 0.25000
+        assert sol.power(-2,3,3) == 1
+        r = sol.power(3,9,1000000007)
         print(r,3**9)
         assert r == 3**9
+        assert sol.power(2,3,3) == 2
     def test_binaryConcersion(self):
         r = binaryConversion(29,15)
         print(r,29,15)
