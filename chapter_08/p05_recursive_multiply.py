@@ -2,9 +2,7 @@
 def multiply(a, b, answer):
     if answer == 0 and a != 0 and b != 0:
         answer = a
-    if a == 1:
-        return answer
-    elif b == 1:
+    if a == 1 or b == 1:
         return answer
     else:
         answer += a
@@ -14,7 +12,6 @@ def mmultiply(a,b):
 	if b == 0: return 0
 	if b>0: return a + mmultiply(a,b-1)
 	else: return -mmultiply(a,-b)
-
 # Solution 1
 def minProduct(a, b):
     bigger = b if a < b else a  # a < b ? b : a
