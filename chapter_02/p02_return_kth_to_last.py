@@ -3,7 +3,7 @@ from chapter_02.linked_list import LinkedList
 
 def kth_to_last(ll, k):
     runner = current = ll.head
-    for _ in range(k):
+    for _ in range(k): # move runner k nodes ahead of current
         if not runner:
             return
         runner = runner.next

@@ -18,13 +18,13 @@ def remove_dups(ll):
     ll.tail = previous
     return ll
 
-
+# don't need seen
 def remove_dups_followup(ll):
     runner = current = ll.head
     while current:
         runner = current
-        while runner.next:
-            if runner.next.value == current.value:
+        while runner.next: # for each node, runner scans to end to find dup
+            if runner.next.value == current.value: # found dup
                 runner.next = runner.next.next
             else:
                 runner = runner.next
